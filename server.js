@@ -69,7 +69,8 @@ app.get('*', function (req, res) {
     res.status(404).send('404 not found');
 });
 
-app.listen(3000, function () {
-    open('http://localhost:3000/')
-    console.log('Simple server listening on port 3000! Open http://localhost:3000/ in your browser to see the result.');
+var port = process.env.port || 3000;
+var url = process.env.APPLICATION_URL || 'http://localhost:' + port;
+app.listen(port, function () {
+    console.log('Simple server listening on port %s! Open %s in your browser to see the result.', port, url);
 });
