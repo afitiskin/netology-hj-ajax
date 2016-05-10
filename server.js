@@ -1,5 +1,4 @@
 var express = require('express');
-var open = require('open')
 var app = express();
 
 var options = {
