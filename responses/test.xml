@@ -1,0 +1,17 @@
+<person>
+    <name>Alex</name>
+    <lastname>Fitiskin</lastname>
+    <country>Cyprus</country>
+    <age>27</age>
+    <job>
+        <company>Webzilla</company>
+        <position>Front-end web developer</position>
+    </job>
+    <hobbies count="4">
+        <hobby>Football</hobby>
+        <hobby>Snowboard</hobby>
+        <hobby>Wakeboard</hobby>
+        <hobby>Hiking</hobby>
+    </hobbies>
+    <online>yes</online>
+</person>

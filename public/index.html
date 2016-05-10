@@ -1,0 +1,1012 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Технология AJAX</title>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="shower/themes/ribbon/styles/screen-16x10.css">
+</head>
+<body class="shower">
+    <style>
+        .hidden {
+            display: none!important;
+        }
+        .caption h1, .caption p {
+            color: #fff;
+        }
+        .first-slide {
+            background: url(pictures/cover.jpg) no-repeat 50%;
+            background-size: cover;
+            text-align: center;
+            font-size: 20px;
+        }
+        .first-slide h2, .first-slide p, .first-slide a {
+            color: #fff;
+        }
+        .first-slide h2 {
+            margin: 30px 0 0;
+            font-size: 70px;
+        }
+        .first-slide p {
+            margin: 10px 0 0;
+            font-style: italic;
+        }
+
+        .large-code, .large-note {
+            font-size: 50%;
+        }
+        .big-code, .big-note {
+            font-size: 70%;
+        }
+        .do-not-do-it-pic {
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            z-index: -1;
+            transform: scale(.5) translate(50%, 50%)
+        }
+        .run-button {
+            display: inline-block;
+            height: 26px;
+            position: relative;
+            vertical-align: bottom;
+            padding: 0 15px;
+            margin: 0 25px;
+            background: #4b86c2;
+            border: none;
+            border-radius: 13px;
+            color: #fff;
+            line-height: 26px;
+            cursor: pointer;
+            text-shadow: 1px 1px solid rgba(0, 0, 0, .5);
+            opacity: .8;
+            outline: none;
+        }
+        .run-button:hover {
+            opacity: 1;
+            box-shadow: 0 0 15px rgba(0, 0, 0, .3);
+        }
+
+        .form {
+            display: block;
+            position: relative;
+            margin: 50px 0;
+        }
+
+        .form-field {
+            display: inline-block;
+            height: 40px;
+            position: relative;
+            padding: 0 15px;
+            font: 300 16px/40px 'Open Sans', sans-serif;
+            border: 1px solid #000;
+            border-radius: 5px;
+            outline: none;
+        }
+        .form-field:focus {
+            box-shadow: 0 0 20px rgba(0, 0, 0, .15);
+        }
+        .form-button {
+            display: inline-block;
+            height: 40px;
+            position: relative;
+            padding: 0 30px;
+            font: 300 16px/40px 'Open Sans', sans-serif;
+            border: 0;
+            border-radius: 5px;
+            cursor: pointer;
+            outline: none;
+            opacity: .9;
+        }
+        .form-button:focus, .form-button:hover {
+            opacity: 1;
+            box-shadow: 0 0 20px rgba(0, 0, 0, .15);
+        }
+        .form-field + .form-field, .form-field + .form-button {
+            margin-left: 15px;
+        }
+
+        iframe {
+            display: block;
+            width: 100%;
+            height: 300px;
+            border: 1px solid #000;
+        }
+    </style>
+
+    <header class="caption">
+        <h1>Технология AJAX</h1>
+        <p>Университет &laquo;Нетология&raquo;</p>
+    </header>
+
+    <section class="slide first-slide">
+        <h2>Технология AJAX</h2>
+        <p><a href="https://facebook.com/alexfitiskin">Александр Фитискин</a>, Front-end web developer at <a href="https://webzilla.com">Webzilla</a></p>
+    </section>
+
+    <section class="slide">
+        <h2>Что такое AJAX?</h2>
+        <figure>
+            <blockquote>
+                <p>AJAX (аббревиатура от «<b>A</b>synchronous <b>J</b>avascript <b>A</b>nd <b>X</b>ml») &mdash; подход к построению интерактивных пользовательских интерфейсов веб-приложений, заключающийся в «фоновом» обмене данными браузера с веб-сервером. В результате, при обновлении данных веб-страница не перезагружается полностью, и веб-приложения становятся быстрее и удобнее.</p>
+            </blockquote>
+            <figcaption>
+                <a target="_blank" href="https://ru.wikipedia.org/wiki/AJAX">Описание из Википедии</a>
+            </figcaption>
+        </figure>
+    </section>
+
+    <section class="slide">
+        <h2><mark>Классическая модель</mark> vs AJAX</h2>
+        <ol>
+            <li>Пользователь заходит на веб-страницу и нажимает на какой-нибудь её элемент.</li>
+            <li>Браузер формирует и отправляет запрос серверу.</li>
+            <li>В ответ сервер генерирует совершенно новую веб-страницу и отправляет её браузеру и т. д. После чего браузер полностью перезагружает всю страницу.</li>
+        </ol>
+    </section>
+
+    <section class="slide">
+        <h2>Классическая модель vs <mark>AJAX</mark></h2>
+        <ol>
+            <li>Пользователь заходит на веб-страницу и нажимает на какой-нибудь её элемент.</li>
+            <li>Скрипт (JavaScript) определяет, какая информация необходима для обновления страницы.</li>
+            <li>Браузер отправляет соответствующий запрос на сервер.</li>
+            <li>Сервер возвращает только ту часть документа, на которую пришёл запрос.</li>
+            <li>Скрипт вносит изменения с учётом полученной информации (без полной перезагрузки страницы).</li>
+        </ol>
+    </section>
+
+    <section class="slide">
+        <h2>Отправка данных через form <button class="run-button form-data-send-simple">Пример</button></h2>
+        <pre class="big-code code-example-form">
+            <code>&lt;form method="post"&gt;</code>
+            <code>    &lt;input type="text" name="login" placeholder="Login"&gt;</code>
+            <code>    &lt;input type="password" name="password" placeholder="Password"&gt;</code>
+            <code>    &lt;button type="submit"&gt;Send&lt;button&gt;</code>
+            <code>&lt;/form&gt;</code>
+        </pre>
+        <form class="form login-simple-form hidden" method="post">
+            <input class="form-field" type="text" name="login" placeholder="Login">
+            <input class="form-field" type="password" name="password" placeholder="Password">
+            <button class="form-button" type="submit">Send</button>
+        </form>
+    </section>
+
+    <section class="slide">
+        <h2>Отправка данных через form в iframe <button class="run-button form-data-send-iframe">Пример</button></h2>
+        <div class="code-example-iframe">
+            <pre class="big-code">
+                <code>&lt;form method="post" <mark>target="form-frame"</mark>&gt;</code>
+                <code>    &lt;input type="text" name="login" placeholder="Login"&gt;</code>
+                <code>    &lt;input type="password" name="password" placeholder="Password"&gt;</code>
+                <code>    &lt;button type="submit"&gt;Send&lt;button&gt;</code>
+                <code>&lt;/form&gt;</code>
+                <code>&lt;iframe <mark>name="form-frame"</mark>&gt;&lt;/iframe&gt;</code>
+            </pre>
+            <p class="note big-note">Кстати, из iframe можно получить данные с помощью JavaScript, если домен (и порт) в <code>src</code> iframe'а совпадает с доменом (и портом) основного окна. Таким образом данные на сервер можно как отправлять, так и получать.</p>
+        </div>
+        <form class="form login-iframe-form hidden" target="form-send-iframe" method="post">
+            <input class="form-field" type="text" name="login" placeholder="Login">
+            <input class="form-field" type="password" name="password" placeholder="Password">
+            <button class="form-button" type="submit">Send</button>
+        </form>
+        <iframe name="form-send-iframe" class="simple-iframe hidden"></iframe>
+    </section>
+
+    <section class="slide">
+        <h2>Отправка данных через тег script <button class="run-button script-data-send">Пример</button></h2>
+        <pre class="big-code">
+            <code><span class="comment">// создаем скрипт</span></code>
+            <code>var script = document.createElement('script');</code>
+            <code><span class="comment">// кодируем данные, передаваемые на сервер в URL</span></code>
+            <code>script.src = 'https://www.google.com/?q=' + encodeURIComponent('hello from script');</code>
+            <code><span class="comment">// отправляем запрос</span></code>
+            <code>document.body.appendChild(script);</code>
+            <code><span class="comment">// подчищаем за собой</span></code>
+            <code>document.body.removeChild(script);</code>
+        </pre>
+        <p class="note big-note">Кстати, сервер в качестве ответа может прислать JavaScript, тогда он сразу же после загрузки выполнится. Таким образом мы так же можем получить данные с сервера, но об этом чуть позже.</p>
+    </section>
+
+    <section class="slide">
+        <h2>Отправка данных через тег img <button class="run-button img-data-send">Пример</button></h2>
+        <pre class="big-code">
+            <code><span class="comment">// создаем картинку</span></code>
+            <code>var img = document.createElement('img');</code>
+            <code><span class="comment">// кодируем данные, передаваемые на сервер в URL</span></code>
+            <code>img.src = 'https://www.google.com/?q=' + encodeURIComponent('hello from img');</code>
+            <code><span class="comment">// отправляем запрос</span></code>
+            <code>document.body.appendChild(img);</code>
+            <code><span class="comment">// подчищаем за собой</span></code>
+            <code>document.body.removeChild(img);</code>
+        </pre>
+        <p class="note big-note">Кстати, так работает скрипт Google Analytics, который отправляет данные о действиях пользователя для сбора статистики</p>
+    </section>
+
+    <section class="slide">
+        <h2>Отправка данных через XMLHttpRequest</h2>
+        <pre class="large-code">
+            <code><span class="comment">// 1. Создаём новый объект XMLHttpRequest</span></code>
+            <code>var xhr = new XMLHttpRequest();</code>
+            <code><span class="comment">// 2. Конфигурируем его: GET-запрос на URL 'some_data.txt'</span></code>
+            <code>xhr.open('GET', 'some_data.txt', false);</code>
+            <code><span class="comment">// 3. Отсылаем запрос</span></code>
+            <code>xhr.send();</code>
+            <code><span class="comment">// 4. Если код ответа сервера не 200, то это ошибка</span></code>
+            <code>if (xhr.status == 200) {</code>
+            <code>    <span class="comment">// вывести результат</span></code>
+            <code>    alert( xhr.responseText ); <span class="comment">// responseText &mdash; текст ответа.</span></code>
+            <code>} else {</code>
+            <code>    <span class="comment">// обработать ошибку</span></code>
+            <code>    alert( xhr.status + ': ' + xhr.statusText ); <span class="comment">// 404: Not Found</span></code>
+            <code>}</code>
+        </pre>
+    </section>
+
+    <section class="slide">
+        <h2>Создание запроса</h2>
+        <pre class="large-code">
+            <code><span class="comment">// 1. Создаём новый объект XMLHttpRequest</span></code>
+            <code class="mark">var xhr = new XMLHttpRequest();</code>
+            <code><span class="comment">// 2. Конфигурируем его: GET-запрос на URL 'some_data.txt'</span></code>
+            <code>xhr.open('GET', 'some_data.txt', false);</code>
+            <code><span class="comment">// 3. Отсылаем запрос</span></code>
+            <code>xhr.send();</code>
+            <code><span class="comment">// 4. Если код ответа сервера не 200, то это ошибка</span></code>
+            <code>if (xhr.status == 200) {</code>
+            <code>    <span class="comment">// вывести результат</span></code>
+            <code>    alert( xhr.responseText ); <span class="comment">// responseText &mdash; текст ответа.</span></code>
+            <code>} else {</code>
+            <code>    <span class="comment">// обработать ошибку</span></code>
+            <code>    alert( xhr.status + ': ' + xhr.statusText ); <span class="comment">// 404: Not Found</span></code>
+            <code>}</code>
+        </pre>
+    </section>
+
+    <section class="slide">
+        <h2>Установка параметров запроса</h2>
+        <pre class="large-code">
+            <code><span class="comment">// 1. Создаём новый объект XMLHttpRequest</span></code>
+            <code>var xhr = new XMLHttpRequest();</code>
+            <code><span class="comment">// 2. Конфигурируем его: GET-запрос на URL 'some_data.txt'</span></code>
+            <code class="mark">xhr.open('GET', 'some_data.txt', false);</code>
+            <code><span class="comment">// 3. Отсылаем запрос</span></code>
+            <code>xhr.send();</code>
+            <code><span class="comment">// 4. Если код ответа сервера не 200, то это ошибка</span></code>
+            <code>if (xhr.status == 200) {</code>
+            <code>    <span class="comment">// вывести результат</span></code>
+            <code>    alert( xhr.responseText ); <span class="comment">// responseText &mdash; текст ответа.</span></code>
+            <code>} else {</code>
+            <code>    <span class="comment">// обработать ошибку</span></code>
+            <code>    alert( xhr.status + ': ' + xhr.statusText ); <span class="comment">// 404: Not Found</span></code>
+            <code>}</code>
+        </pre>
+    </section>
+
+    <section class="slide">
+        <h2>Отправка запроса</h2>
+        <pre class="large-code">
+            <code><span class="comment">// 1. Создаём новый объект XMLHttpRequest</span></code>
+            <code>var xhr = new XMLHttpRequest();</code>
+            <code><span class="comment">// 2. Конфигурируем его: GET-запрос на URL 'some_data.txt'</span></code>
+            <code>xhr.open('GET', 'some_data.txt', false);</code>
+            <code><span class="comment">// 3. Отсылаем запрос</span></code>
+            <code class="mark">xhr.send();</code>
+            <code><span class="comment">// 4. Если код ответа сервера не 200, то это ошибка</span></code>
+            <code>if (xhr.status == 200) {</code>
+            <code>    <span class="comment">// вывести результат</span></code>
+            <code>    alert( xhr.responseText ); <span class="comment">// responseText &mdash; текст ответа.</span></code>
+            <code>} else {</code>
+            <code>    <span class="comment">// обработать ошибку</span></code>
+            <code>    alert( xhr.status + ': ' + xhr.statusText ); <span class="comment">// 404: Not Found</span></code>
+            <code>}</code>
+        </pre>
+    </section>
+
+    <section class="slide">
+        <h2>Обработка ответа</h2>
+        <pre class="large-code">
+            <code><span class="comment">// 1. Создаём новый объект XMLHttpRequest</span></code>
+            <code>var xhr = new XMLHttpRequest();</code>
+            <code><span class="comment">// 2. Конфигурируем его: GET-запрос на URL 'some_data.txt'</span></code>
+            <code>xhr.open('GET', 'some_data.txt', false);</code>
+            <code><span class="comment">// 3. Отсылаем запрос</span></code>
+            <code>xhr.send();</mark></code>
+            <code><span class="comment">// 4. Если код ответа сервера не 200, то это ошибка</span></code>
+            <code class="mark">if (xhr.status == 200) {</code>
+            <code class="mark">    <span class="comment">// вывести результат</span></code>
+            <code class="mark">    alert( xhr.responseText ); <span class="comment">// responseText &mdash; текст ответа.</span></code>
+            <code class="mark">} else {</code>
+            <code class="mark">    <span class="comment">// обработать ошибку</span></code>
+            <code class="mark">    alert( xhr.status + ': ' + xhr.statusText ); <span class="comment">// 404: Not Found</span></code>
+            <code class="mark">}</code>
+        </pre>
+    </section>
+
+    <section class="slide">
+        <h2>Данные успешно загружены <button class="run-button sync-load-success">Пример</button></h2>
+        <pre class="large-code">
+            <code><span class="comment">// 1. Создаём новый объект XMLHttpRequest</span></code>
+            <code>var xhr = new XMLHttpRequest();</code>
+            <code><span class="comment">// 2. Конфигурируем его: GET-запрос на URL 'some_data.txt'</span></code>
+            <code>xhr.open('GET', 'some_data.txt', false);</code>
+            <code><span class="comment">// 3. Отсылаем запрос</span></code>
+            <code>xhr.send();</code>
+            <code><span class="comment">// 4. Если код ответа сервера не 200, то это ошибка</span></code>
+            <code>if (xhr.status == 200) {</code>
+            <code class="mark">    <span class="comment">// вывести результат</span></code>
+            <code class="mark">    alert( xhr.responseText ); <span class="comment">// responseText &mdash; текст ответа.</span></code>
+            <code>} else {</code>
+            <code>    <span class="comment">// обработать ошибку</span></code>
+            <code>    alert( xhr.status + ': ' + xhr.statusText ); <span class="comment">// 404: Not Found</span></code>
+            <code>}</code>
+        </pre>
+    </section>
+
+    <section class="slide">
+        <h2>Произошла ошибка <button class="run-button sync-load-error">Пример</button></h2>
+        <pre class="large-code">
+            <code><span class="comment">// 1. Создаём новый объект XMLHttpRequest</span></code>
+            <code>var xhr = new XMLHttpRequest();</code>
+            <code><span class="comment">// 2. Конфигурируем его: GET-запрос на URL 'some_data.txt'</span></code>
+            <code>xhr.open('GET', 'some_data.txt', false);</code>
+            <code><span class="comment">// 3. Отсылаем запрос</span></code>
+            <code>xhr.send();</code>
+            <code><span class="comment">// 4. Если код ответа сервера не 200, то это ошибка</span></code>
+            <code>if (xhr.status == 200) {</code>
+            <code>    <span class="comment">// вывести результат</span></code>
+            <code>    alert( xhr.responseText ); <span class="comment">// responseText &mdash; текст ответа.</span></code>
+            <code>} else {</code>
+            <code class="mark">    <span class="comment">// обработать ошибку</span></code>
+            <code class="mark">    alert( xhr.status + ': ' + xhr.statusText ); <span class="comment">// 404: Not Found</span></code>
+            <code>}</code>
+        </pre>
+    </section>
+
+    <section class="slide">
+        <h2>Объект XMLHttpRequest</h2>
+        <p>
+            Объект <code>XMLHttpRequest</code> (или, как его кратко называют, «XHR») дает возможность из JavaScript делать HTTP-запросы к серверу без перезагрузки страницы.
+        </p>
+        <p>
+            Несмотря на слово «XML» в названии, XMLHttpRequest может работать с любыми данными, а не только с XML.
+        </p>
+    </section>
+
+    <section class="slide">
+        <h2>XMLHttpRequest.open()</h2>
+        <pre class="large-code">
+            <code><span class="comment">// 1. Создаём новый объект XMLHttpRequest</span></code>
+            <code>var xhr = new XMLHttpRequest();</code>
+            <code><span class="comment">// 2. Конфигурируем его: GET-запрос на URL 'some_data.txt'</span></code>
+            <code class="mark">xhr.open('GET', 'some_data.txt', false);</code>
+            <code><span class="comment">// 3. Отсылаем запрос</span></code>
+            <code>xhr.send();</code>
+            <code><span class="comment">// 4. Если код ответа сервера не 200, то это ошибка</span></code>
+            <code>if (xhr.status == 200) {</code>
+            <code>    <span class="comment">// вывести результат</span></code>
+            <code>    alert( xhr.responseText ); <span class="comment">// responseText &mdash; текст ответа.</span></code>
+            <code>} else {</code>
+            <code>    <span class="comment">// обработать ошибку</span></code>
+            <code>    alert( xhr.status + ': ' + xhr.statusText ); <span class="comment">// 404: Not Found</span></code>
+            <code>}</code>
+        </pre>
+    </section>
+
+    <section class="slide">
+        <h2>XMLHttpRequest.open()</h2>
+        <pre class="big-code">
+            <code><span class="comment">void</span> open(</code>
+            <code>    <span class="comment">String</span> <em>method</em>,</code>
+            <code>    <span class="comment">String</span> <em>url</em>,</code>
+            <code>    <span class="comment">optional boolean</span> <em>async</em>,</code>
+            <code>    <span class="comment">optional String</span> <em>user</em>,</code>
+            <code>    <span class="comment">optional String</span> <em>password</em></code>
+            <code>);</code>
+        </pre>
+    </section>
+
+    <section class="slide">
+        <h2>XMLHttpRequest.open()</h2>
+        <pre class="big-code">
+            <code><span class="comment">void</span> open(</code>
+            <code class="mark">    <span class="comment">String</span> <em>method</em>,</code>
+            <code>    <span class="comment">String</span> <em>url</em>,</code>
+            <code>    <span class="comment">optional boolean</span> <em>async</em>,</code>
+            <code>    <span class="comment">optional String</span> <em>user</em>,</code>
+            <code>    <span class="comment">optional String</span> <em>password</em></code>
+            <code>);</code>
+        </pre>
+        <p class="big-note">
+            <code><em>method</em></code> &mdash; HTTP-метод, например <code>GET</code>, <code>POST</code>, <code>PUT</code>, <code>DELETE</code>
+        </p>
+    </section>
+
+    <section class="slide">
+        <h2>XMLHttpRequest.open()</h2>
+        <pre class="big-code">
+            <code><span class="comment">void</span> open(</code>
+            <code>    <span class="comment">String</span> <em>method</em>,</code>
+            <code class="mark">    <span class="comment">String</span> <em>url</em>,</code>
+            <code>    <span class="comment">optional boolean</span> <em>async</em>,</code>
+            <code>    <span class="comment">optional String</span> <em>user</em>,</code>
+            <code>    <span class="comment">optional String</span> <em>password</em></code>
+            <code>);</code>
+        </pre>
+        <p class="big-note">
+            <code><em>url</em></code> &mdash; адрес запроса. Можно использовать не только <code>http(s)://</code>, но и другие протоколы, например <code>ftp://</code> и <code>file://</code>
+        </p>
+        <p class="note big-note">При использовании не <code>http(s)://</code> адресов параметр <em>method</em> будет проигнорирован</p>
+    </section>
+
+    <section class="slide">
+        <h2>XMLHttpRequest.open()</h2>
+        <pre class="big-code">
+            <code><span class="comment">void</span> open(</code>
+            <code>    <span class="comment">String</span> <em>method</em>,</code>
+            <code>    <span class="comment">String</span> <em>url</em>,</code>
+            <code class="mark">    <span class="comment">optional boolean</span> <em>async</em>,</code>
+            <code>    <span class="comment">optional String</span> <em>user</em>,</code>
+            <code>    <span class="comment">optional String</span> <em>password</em></code>
+            <code>);</code>
+        </pre>
+        <p class="big-note">
+            <code><em>async</em></code> &mdash; необязательный параметр (по умолчанию имеет значение <code>true</code>), который определяет тип запроса: синхронный или асинхронный.
+        </p>
+    </section>
+
+    <section class="slide">
+        <h2>XMLHttpRequest.open()</h2>
+        <pre class="big-code">
+            <code><span class="comment">void</span> open(</code>
+            <code>    <span class="comment">String</span> <em>method</em>,</code>
+            <code>    <span class="comment">String</span> <em>url</em>,</code>
+            <code class="mark">    <span class="comment">optional boolean</span> <em>async</em>,</code>
+            <code>    <span class="comment">optional String</span> <em>user</em>,</code>
+            <code>    <span class="comment">optional String</span> <em>password</em></code>
+            <code>);</code>
+        </pre>
+        <p class="big-note">
+            Синхронный запрос после вызова <code>xhr.send()</code> останавливает выполнение скриптов до тех пор, пока ответ от сервера не будет получен. После получения ответа выполнение кода продолжится со следующей строки.
+        </p>
+    </section>
+
+    <section class="slide">
+        <h2>XMLHttpRequest.open()</h2>
+        <pre class="big-code">
+            <code><span class="comment">void</span> open(</code>
+            <code>    <span class="comment">String</span> <em>method</em>,</code>
+            <code>    <span class="comment">String</span> <em>url</em>,</code>
+            <code class="mark">    <span class="comment">optional boolean</span> <em>async</em>,</code>
+            <code>    <span class="comment">optional String</span> <em>user</em>,</code>
+            <code>    <span class="comment">optional String</span> <em>password</em></code>
+            <code>);</code>
+        </pre>
+        <p class="big-note">
+            Асинхронный запрос после вызова <code>xhr.send()</code> продолжит выполнение кода. Результат нужно будет получить через обработчики событий, которые мы рассмотрим далее.
+        </p>
+    </section>
+
+    <section class="slide">
+        <h2>XMLHttpRequest.open()</h2>
+        <pre class="big-code">
+            <code><span class="comment">void</span> open(</code>
+            <code>    <span class="comment">String</span> <em>method</em>,</code>
+            <code>    <span class="comment">String</span> <em>url</em>,</code>
+            <code>    <span class="comment">optional boolean</span> <em>async</em>,</code>
+            <code class="mark">    <span class="comment">optional String</span> <em>user</em>,</code>
+            <code class="mark">    <span class="comment">optional String</span> <em>password</em></code>
+            <code>);</code>
+        </pre>
+        <p class="big-note">
+            <code><em>user</em></code>, <code><em>password</em></code> &mdash; логин и пароль для HTTP-авторизации, если требуются
+        </p>
+    </section>
+
+    <section class="slide">
+        <h2>XMLHttpRequest.open()</h2>
+        <p>
+            Заметим, что вызов <code>xhr.open()</code>, в противоположность своему названию (open &mdash; англ. &laquo;открыть&raquo;) не открывает соединение. Он лишь настраивает запрос, а коммуникация инициируется методом <code>xhr.send()</code>.
+        </p>
+    </section>
+
+    <section class="slide">
+        <h2>XMLHttpRequest.setRequestHeader()</h2>
+        <pre class="big-code">
+            <code><span class="comment">void</span> setRequestHeader(</code>
+            <code>    <span class="comment">String</span> <em>header</em>,</code>
+            <code>    <span class="comment">String</span> <em>value</em></code>
+            <code>);</code>
+        </pre>
+
+        <p class="big-note">
+            <code><em>header</em></code> &mdash; название заголовка, который должен быть отправлен на сервер
+        </p>
+        <p class="big-note">
+            <code><em>value</em></code> &mdash; значение заголовка, который должен быть отправлен на сервер
+        </p>
+    </section>
+
+    <section class="slide">
+        <h2>XMLHttpRequest.send()</h2>
+        <pre class="big-code">
+            <code><span class="comment">void</span> send();</code>
+            <code><span class="comment">void</span> send(<span class="comment">optional ArrayBufferView</span> <em>data</em>);</code>
+            <code><span class="comment">void</span> send(<span class="comment">optional Blob</span> <em>data</em>);</code>
+            <code><span class="comment">void</span> send(<span class="comment">optional Document</span> <em>data</em>);</code>
+            <code><span class="comment">void</span> send(<span class="comment">optional String</span> <em>data</em>);</code>
+            <code><span class="comment">void</span> send(<span class="comment">optional FormData</span> <em>data</em>);</code>
+        </pre>
+
+        <p class="big-note">
+            <code><em>data</em></code> &mdash; данные, которые будут отправленны на сервер. Не все типы запросов поддерживают передачу данных на сервер, например при использовании <code>GET</code>-запроса параметр <code><em>data</em></code> будет проигнорирован, так как при <code>GET</code>-запросах данные на сервер передаются только через URL.
+        </p>
+    </section>
+
+    <section class="slide">
+        <h2>XMLHttpRequest.abort()</h2>
+        <pre>
+            <code><span class="comment">void</span> abort();</code>
+        </pre>
+        <p class="note">Обрывает запрос, если он уже был отправлен и ещё не был завершён</p>
+    </section>
+
+    <section class="slide">
+        <h2>XMLHttpRequest.getResponseHeader()</h2>
+        <pre class="big-code">
+            <code><span class="comment">string</span> getResponseHeader(</code>
+            <code>    <span class="comment">String</span> <em>header</em>,</code>
+            <code>);</code>
+        </pre>
+
+        <p class="big-note">
+            <code><em>header</em></code> &mdash; название заголовка, который должен быть отправлен на сервер
+        </p>
+        <p class="note big-note">
+            В качестве результата возвращается строка, содержащая тело заголовка, полученного от сервера или <code>null</code> если заголовки от сервера еще не получены, или указанного заголовка нет в ответе от сервера
+        </p>
+    </section>
+
+    <section class="slide">
+        <h2>XMLHttpRequest.getAllResponseHeaders()</h2>
+        <pre class="big-code">
+            <code><span class="comment">string</span> getAllResponseHeaders();</code>
+        </pre>
+
+        <p class="note big-note">
+            В качестве результата возвращается строка, содержащая все заголовки ответа, полученные от сервера, разделенные символом перевода строки. Результат так же может принимать значение <code>null</code> если заголовки от сервера еще не были получены.
+        </p>
+    </section>
+
+    <section class="slide">
+        <h2>XMLHttpRequest.timeout</h2>
+        <div class="big-note">
+            <p>
+                <code><em>timeout</em></code> &mdash; число, определяющее количество милисекунд, за которые запрос должен быть выполнен, иначе он будет автоматически прерван (автоматически сработает метод <code>XMLHttpRequest.abort()</code>):
+            </p>
+        </div>
+    </section>
+
+    <section class="slide">
+        <h2>XMLHttpRequest.readyState</h2>
+        <div class="big-note">
+            <p>
+                <code><em>readyState</em></code> <sup><i>read only</i></sup> &mdash; числовое значение статуса запроса, возможны следующие варианты:
+            </p>
+            <ul>
+                <li><code>0</code> (<code>XMLHttpRequest.UNSENT</code>) &mdash; запрос был создан, но <code>open()</code> еще не был вызван</li>
+                <li><code>1</code> (<code>XMLHttpRequest.OPENED</code>) &mdash; <code>open()</code> был вызван, но запрос еще не отправлен</li>
+                <li><code>2</code> (<code>XMLHttpRequest.HEADERS_RECEIVED</code>) &mdash; <code>send()</code> был вызван, статус и заголовки ответа получены от сервера</li>
+                <li><code>3</code> (<code>XMLHttpRequest.LOADING</code>) &mdash; получение ответа от сервера, <code>responseText</code> содержит полученную часть ответа сервера</li>
+                <li><code>4</code> (<code>XMLHttpRequest.DONE</code>) &mdash; ответ от сервера получен, запрос успешно завершен</li>
+            </ul>
+        </div>
+    </section>
+
+    <section class="slide">
+        <h2>XMLHttpRequest.responseType</h2>
+        <div class="big-note">
+            <p>
+                <code><em>responseType</em></code> <sup><i>read only</i></sup> &mdash; строка, определяющая тип данных, полученных с сервера. Возможны следующие значения:
+            </p>
+            <ul>
+                <li><code>""</code> &mdash; получены данные формате <code>String</code> <em>(это значение по умолчанию)</em></li>
+                <li><code>"arraybuffer"</code> &mdash; получены данные в формате <code>ArrayBuffer</code></li>
+                <li><code>"blob"</code> &mdash; получены данные в формате <code>Blob</code></li>
+                <li><code>"document"</code> &mdash; получены данные в формате <code>Document</code></li>
+                <li><code>"json"</code> &mdash; получены данные в формате <code>Object</code> (JSON)</li>
+                <li><code>"text"</code> &mdash; получены данные в формате <code>String</code></li>
+            </ul>
+        </div>
+    </section>
+    <section class="slide">
+        <h2>XMLHttpRequest.response</h2>
+        <div class="big-note">
+            <p>
+                <code><em>response</em></code> <sup><i>read only</i></sup> &mdash; <code>ArrayBuffer</code> / <code>Blob</code> / <code>Document</code> / <code>Object</code> или <code>String</code> в зависимости от значения параметра <code>responseType</code>
+            </p>
+            <p>Параметр <code>response</code> может иметь значение <code>null</code> в случае если запрос еще не был отправлен или же если запрос завершился ошибкой</p>
+        </div>
+    </section>
+    <section class="slide">
+        <h2>XMLHttpRequest.responseText</h2>
+        <div class="big-note">
+            <p>
+                <code><em>responseText</em></code> <sup><i>read only</i></sup> &mdash; ответ, полученный с сервера, в формате <code>String</code> или же <code>null</code> (если запрос еще не был отправле / запрос завершился ошибкой)
+            </p>
+        </div>
+    </section>
+    <section class="slide">
+        <h2>XMLHttpRequest.responseXml</h2>
+        <div class="big-note">
+            <p>
+                <code><em>responseXml</em></code> <sup><i>read only</i></sup> &mdash; ответ, полученный с сервера, сконвертированный в <code>Document</code> (XML-документ)
+            </p>
+            <p>
+                Параметр <code>responseXml</code> может принимать значение <code>null</code> в случае если запрос еще не был отправлен, запрос завершился ошибкой или же ответ сервера не может быть сконвертирован в <code>Document</code>. Так же <code>responseXml</code> принимает значение <code>null</code> при запросе <code>data: URL</code>
+            </p>
+            <p>
+                С параметром <code>responseXml</code> (в случае если он не <code>null</code>) можно работать как с DOM, например: <code>xhr.responseXml.querySelector('...');</code>
+            </p>
+        </div>
+    </section>
+
+    <section class="slide">
+        <h2>XMLHttpRequest.status и XMLHttpRequest.statusText</h2>
+        <div class="big-note">
+            <p>
+                <code><em>status</em></code> <sup><i>read only</i></sup> &mdash; числовое значение статуса ответа сервера, например статус <code>200</code> означает успешно выполненный запрос.
+            </p>
+            <p>
+                <code><em>statusText</em></code> <sup><i>read only</i></sup> &mdash; текстовая расшифровка статуса ответ сервера, например <code>"200 OK"</code>
+            </p>
+        </div>
+    </section>
+
+    <section class="slide">
+        <h2>Синхронный vs Асинхронный</h2>
+        <p>Третий параметр метода <br /><code style="font-size: 90%">XMLHttpRequest.open(<em>method</em>, <em>url</em>, <mark><em>async</em></mark>, <em>user</em>, <em>password</em>)</code><br/>определяет тип запроса: синхронный или асинхронный.</p>
+        <p>Этот тип определяет как будет выполняться код после отправки запроса.</p>
+    </section>
+
+    <section class="slide">
+        <h2><mark>Синхронный</mark> vs Асинхронный</h2>
+        <p>В случае синхронного запроса выполнение кода будет остановлено после вызова метода <code>send()</code> и возобновлено после получения ответа от сервера или же по истечению установленного <code>timeout</code></p>
+    </section>
+
+    <section class="slide">
+        <h2><mark>Синхронный</mark> vs Асинхронный <button class="run-button sync-problem-load">Пример</button></h2>
+        <pre class="large-code">
+            <code><span class="comment">// 1. Создаём новый объект XMLHttpRequest</span></code>
+            <code>var xhr = new XMLHttpRequest();</code>
+            <code><span class="comment">// 2. Конфигурируем его: GET-запрос на URL 'some_data.txt'</span></code>
+            <code class="mark">xhr.open('GET', 'some_data.txt', <mark class="important">false</mark>);</code>
+            <code><span class="comment">// 3. Отсылаем запрос</span></code>
+            <code>xhr.send();</code>
+            <code><span class="comment">// 4. Если код ответа сервера не 200, то это ошибка</span></code>
+            <code>if (xhr.status == 200) {</code>
+            <code>    <span class="comment">// вывести результат</span></code>
+            <code>    alert( xhr.responseText ); <span class="comment">// responseText &mdash; текст ответа.</span></code>
+            <code>} else {</code>
+            <code>    <span class="comment">// обработать ошибку</span></code>
+            <code>    alert( xhr.status + ': ' + xhr.statusText ); <span class="comment">// 404: Not Found</span></code>
+            <code>}</code>
+        </pre>
+    </section>
+
+    <section class="slide">
+        <h2 class="shout shrink">Не надо так!</h2>
+        <img class="next do-not-do-it-pic" src="pictures/do-not-do-it.jpg" />
+    </section>
+
+    <section class="slide">
+        <h2>Синхронный vs <mark>Асинхронный</mark></h2>
+        <p>В случае асинхронного запроса выполнение кода будет продолжено после вызова метода <code>send()</code>. В случае асинхронного запроса статус запроса можно отслеживать через callback-функции или подписки на события с помощью <code>addEventListener</code></p>
+    </section>
+
+    <section class="slide">
+        <h2>Синхронный vs <mark>Асинхронный</mark></h2>
+        <p>Список событий, отражающих статус запроса:</p>
+        <ul class="big-note">
+            <li><code><em>loadstart</em></code> &mdash; запрос отправлен</li>
+            <li><code><em>progress</em></code> &mdash; браузер получил очередной пакет данных, можно прочитать текущие полученные данные в <code>responseText</code>.</li>
+            <li><code><em>abort</em></code> &mdash; запрос был отменён вызовом <code>XMLHttpRequest.abort()</code></li>
+            <li><code><em>error</em></code> &mdash; произошла ошибка</li>
+            <li><code><em>load</em></code> &mdash; запрос был успешно (без ошибок) завершён</li>
+            <li><code><em>timeout</em></code> &mdash; запрос был прерван по таймауту</li>
+            <li><code><em>loadend</em></code> &mdash; запрос был завершён (успешно или неуспешно)</li>
+        </ul>
+    </section>
+
+    <section class="slide">
+        <h2>Синхронный vs <mark>Асинхронный</mark></h2>
+        <pre>
+            <code>function onLoadStart() {</code>
+            <code>    <span class="comment">// ...</span></code>
+            <code>}</code>
+            <code>xhr.<mark>onloadstart</mark> = onLoadStart;</code>
+        </pre>
+        <p class="note">Чтобы обработать событие через callback-функцию, нужно назначить ее параметру <code>on<em>название_события</em></code></p>
+    </section>
+
+    <section class="slide">
+        <h2>Синхронный vs <mark>Асинхронный</mark></h2>
+        <pre>
+            <code>xhr.<mark>onloadstart</mark> = function () {</code>
+            <code>    <span class="comment">// ...</span></code>
+            <code>}</code>
+        </pre>
+        <p class="note">В качестве callback-функции можно использовать анонимную функцию</p>
+    </section>
+
+    <section class="slide">
+        <h2>Синхронный vs <mark>Асинхронный</mark></h2>
+        <pre class="big-code">
+            <code>function onLoadStart() {</code>
+            <code>    <span class="comment">// ...</span></code>
+            <code>}</code>
+            <code>function anotherOnLoadStart() {</code>
+            <code>    <span class="comment">// ...</span></code>
+            <code>}</code>
+            <code>xhr.onloadstart = onLoadStart;</code>
+            <code>xhr.onloadstart = anotherOnLoadStart;</code>
+        </pre>
+        <p class="note big-note">Стоит учитывать что callback-функция для каждого события может быть только одна</p>
+    </section>
+
+    <section class="slide">
+        <h2>Синхронный vs <mark>Асинхронный</mark></h2>
+        <pre class="big-code">
+            <code>function onLoadStart() {</code>
+            <code>    <span class="comment">// ...</span></code>
+            <code>}</code>
+            <code class="mark">function anotherOnLoadStart() {</code>
+            <code class="mark">    <span class="comment">// ...</span></code>
+            <code class="mark">}</code>
+            <code><s>xhr.onloadstart = onLoadStart;</s></code>
+            <code class="mark">xhr.<mark>onloadstart</mark> = anotherOnLoadStart;</code>
+        </pre>
+        <p class="note big-note">Когда событие произойдет, будет выполнена только функция <code>anotherOnLoadStart</code></p>
+    </section>
+
+    <section class="slide">
+        <h2>Синхронный vs <mark>Асинхронный</mark></h2>
+        <pre>
+            <code>function onLoadStart() {</code>
+            <code>    <span class="comment">// ...</span></code>
+            <code>}</code>
+            <code>xhr.addEventListener('<mark>loadstart</mark>', onLoadStart);</code>
+        </pre>
+        <p class="note">Можно подписаться на событие, используя <code>addEventListener</code>. Для этого используйте название события в качетсве первого параметра</p>
+    </section>
+
+    <section class="slide">
+        <h2>Синхронный vs <mark>Асинхронный</mark></h2>
+        <pre>
+            <code>xhr.addEventListener('<mark>loadstart</mark>', function () {</code>
+            <code>    <span class="comment">// ...</span></code>
+            <code>});</code>
+        </pre>
+        <p class="note">Подписывать на события так же можно анонимные функции</p>
+    </section>
+
+    <section class="slide">
+        <h2>Синхронный vs <mark>Асинхронный</mark></h2>
+        <pre class="big-code">
+            <code>function onLoadStart() {</code>
+            <code>    <span class="comment">// ...</span></code>
+            <code>}</code>
+            <code>function anotherOnLoadStart() {</code>
+            <code>    <span class="comment">// ...</span></code>
+            <code>}</code>
+            <code>xhr.addEventListener('onloadstart', onLoadStart);</code>
+            <code>xhr.addEventListener('onloadstart', anotherOnLoadStart);</code>
+        </pre>
+        <p class="note big-note">Подписывать на события можно сколько угодно функций</p>
+    </section>
+
+    <section class="slide">
+        <h2>Синхронный vs <mark>Асинхронный</mark>  <button class="run-button async-problem-load">Пример</button></h2>
+        <pre class="large-code">
+            <code><span class="comment">// 1. Создаём новый объект XMLHttpRequest</span></code>
+            <code>var xhr = new XMLHttpRequest();</code>
+            <code><span class="comment">// 2. Конфигурируем его: GET-запрос на URL 'some_data.txt'</span></code>
+            <code class="mark">xhr.open('GET', 'some_data.txt', <mark class="important">true</mark>); <span class="comment">// третий параметр можно не указывать</span></code>
+            <code><span class="comment">// 3. Отсылаем запрос</span></code>
+            <code>xhr.send();</code>
+            <code>xhr.onload = function () {</code>
+            <code>    <span class="comment">// вывести результат</span></code>
+            <code>    alert( xhr.responseText ); <span class="comment">// responseText &mdash; текст ответа.</span></code>
+            <code>}</code>
+            <code>xhr.onerror = function () {</code>
+            <code>    <span class="comment">// обработать ошибку</span></code>
+            <code>    alert( xhr.status + ': ' + xhr.statusText ); <span class="comment">// 404: Not Found</span></code>
+            <code>}</code>
+        </pre>
+    </section>
+
+    <section class="slide">
+        <h2>Формат JSON</h2>
+        <pre class="big-code">
+            <code>{</code>
+            <code>    "name": "Alex",</code>
+            <code>    "lastname": "Fitiskin",</code>
+            <code>    "country": "Cyprus",</code>
+            <code>    "age": 27,</code>
+            <code>    "job": {</code>
+            <code>        "company": "Webzilla",</code>
+            <code>        "position": "Front-end web developer"</code>
+            <code>    },</code>
+            <code>    "hobbies": ["Football", "Snowboard", "Wakeboard", "Hiking"],</code>
+            <code>    "online": true</code>
+            <code>}</code>
+        </pre>
+    </section>
+
+    <section class="slide">
+        <h2>Same domain policy</h2>
+        <p>Обычно запрос <code>XMLHttpRequest</code> может делать запрос только в рамках одного протокола, домена и порта. При попытке использовать другой домен / порт  / современная реализация <code>XMLHttpRequest</code> предусматривает особую процедуру проверки такого запроса.</p>
+    </section>
+
+    <section class="slide">
+        <h2>CORS</h2>
+        <figure>
+            <blockquote>
+                <p>CORS (аббревиатура от &laquo;<b>C</b>ross-<b>O</b>rigin <b>R</b>esource <b>S</b>haring&raquo;) &mdash; технология современных браузеров, которая позволяет предоставить веб-странице доступ к ресурсам другого домена.
+            </blockquote>
+            <figcaption>
+                <a target="_blank" href="https://ru.wikipedia.org/wiki/Cross-origin_resource_sharing">Описание из Википедии</a>
+            </figcaption>
+        </figure>
+    </section>
+
+    <section class="slide">
+        <h2>JSONP</h2>
+        <figure>
+            <blockquote>
+                <p>JSONP или «JSON with padding» (JSON с набивкой) &mdash; это дополнение к базовому формату JSON. Он предоставляет способ запросить данные с сервера, находящегося в другом домене — операцию, запрещённую в типичных веб-браузерах из-за политики ограничения домена.
+            </blockquote>
+            <figcaption>
+                <a target="_blank" href="https://ru.wikipedia.org/wiki/JSONP">Описание из Википедии</a>
+            </figcaption>
+        </figure>
+    </section>
+
+    <section class="slide">
+        <h2>JSONP</h2>
+        <pre class="big-code">
+            <code>typeof callback === 'function' && callback({</code>
+            <code>    "name": "Alex",</code>
+            <code>    "lastname": "Fitiskin",</code>
+            <code>    "country": "Cyprus",</code>
+            <code>    "age": 27,</code>
+            <code>    "job": {</code>
+            <code>        "company": "Webzilla",</code>
+            <code>        "position": "Front-end web developer"</code>
+            <code>    },</code>
+            <code>    "hobbies": ["Football", "Snowboard", "Wakeboard", "Hiking"],</code>
+            <code>    "online": true</code>
+            <code>});</code>
+        </pre>
+    </section>
+
+    <section class="slide">
+        <h2>Альтернативы</h2>
+        <ul>
+            <li>Web Sockets</li>
+            <li>Server-side events</li>
+            <li>ES2015 <code>fetch</code></li>
+        </ul>
+    </section>
+
+    <section class="slide">
+        <h2>Полезные ресурсы</h2>
+        <ul>
+            <li><a href="https://learn.javascript.ru/ajax" target="_blank">Описание AJAX и COMET на javascript.ru</a></li>
+            <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest" target="_blank">Спецификация XMLHttpRequest на Mozilla Developer Network</a></li>
+        </ul>
+    </section>
+    <!--section class="slide">
+        <h2>Пара слов о Node.JS</h2>
+        <figure>
+            <blockquote>
+                <p>Node или Node.js &mdash; программная платформа, основанная на движке V8 (транслирующем JavaScript в машинный код), превращающая JavaScript из узкоспециализированного языка в язык общего назначения.</p>
+            </blockquote>
+            <figcaption>
+                <a target="_blank" href="https://ru.wikipedia.org/wiki/Node.js">Описание из Википедии</a>
+            </figcaption>
+        </figure>
+    </section>
+    <section class="slide">
+        <h2>Установка Node.JS</h2>
+        <ul>
+            <li>
+                Для обычных пользователей: <a target="_blank" href="https://nodejs.org/en/download/">"Скачал-установил"</a>
+            </li>
+            <li>
+                Для продвинутых пользователей: <a target="_blank" href="https://nodejs.org/en/download/package-manager/">Установка через package manager</a>
+            </li>
+        </ul>
+    </section-->
+
+    <div class="progress"></div>
+    <script src="shower/shower.min.js"></script>
+    <script>
+    function loadSync(url) {
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', '/api' + url, false);
+        xhr.send();
+        if (xhr.status != 200) {
+            alert(xhr.status + ': ' + xhr.statusText);
+        } else {
+            alert(xhr.responseText);
+        }
+    }
+
+    function loadAsync(url) {
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', '/api' + url, true);
+        xhr.send();
+        xhr.onload = function () {
+            alert(xhr.responseText);
+        };
+        xhr.onerror = function () {
+            alert(xhr.status + ': ' + xhr.statusText);
+        };
+        return xhr;
+    }
+    document.querySelector('.sync-load-success').addEventListener('click', function (event) {
+        event.preventDefault();
+        loadSync('/test_request');
+    });
+    document.querySelector('.sync-load-error').addEventListener('click', function (event) {
+        event.preventDefault();
+        loadSync('/404');
+    });
+
+    var syncProblemLoadCouter = 0;
+    document.querySelector('.sync-problem-load').addEventListener('click', function (event) {
+        event.preventDefault();
+        loadSync(++syncProblemLoadCouter % 2 ? '/test_request' : '/slow_test_request');
+    });
+
+    var asyncProblemLoadCouter = 0;
+    document.querySelector('.async-problem-load').addEventListener('click', function (event) {
+        event.preventDefault();
+        loadAsync(++asyncProblemLoadCouter % 2 ? '/test_request' : '/slow_test_request');
+    });
+
+    document.querySelector('.form-data-send-simple').addEventListener('click', function (event) {
+        event.preventDefault();
+        document.querySelector('.code-example-form').classList.toggle('hidden');
+        document.querySelector('.login-simple-form').classList.toggle('hidden');
+    });
+
+
+    document.querySelector('.form-data-send-iframe').addEventListener('click', function (event) {
+        event.preventDefault();
+        document.querySelector('.login-iframe-form').classList.toggle('hidden');
+        document.querySelector('.simple-iframe').classList.toggle('hidden');
+        document.querySelector('.code-example-iframe').classList.toggle('hidden');
+    });
+
+
+    document.querySelector('.script-data-send').addEventListener('click', function (event) {
+        event.preventDefault();
+        var script = document.createElement('script');
+        script.src = 'https://www.google.com/?q=' + encodeURIComponent('hello from script');
+        document.body.appendChild(script);
+        document.body.removeChild(script);
+    });
+
+    document.querySelector('.img-data-send').addEventListener('click', function (event) {
+        event.preventDefault();
+        var img = document.createElement('img');
+        img.src = 'https://www.google.com/?q=' + encodeURIComponent('hello from img');
+        document.body.appendChild(img);
+        document.body.removeChild(img);
+    });
+    </script>
+</body>
+</html>

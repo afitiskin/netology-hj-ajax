@@ -1,0 +1,20 @@
+{
+  "name": "learn-ajax",
+  "version": "1.0.0",
+  "description": "learn ajax",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "ajax",
+    "xmlhttprequest",
+    "fetch"
+  ],
+  "author": "Alex Fitiskin",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.13.4",
+    "open": "0.0.5"
+  }
+}

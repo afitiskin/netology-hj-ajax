@@ -1,0 +1,12 @@
+{
+    "name": "Alex",
+    "lastname": "Fitiskin",
+    "country": "Cyprus",
+    "age": 27,
+    "job": {
+        company: "Webzilla",
+        position: "Front-end web developer"
+    },
+    "hobbies": ["Football", "Snowboard", "Wakeboard", "Hiking"],
+    "online": true
+}
