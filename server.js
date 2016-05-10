@@ -68,8 +68,8 @@ app.get('*', function (req, res) {
     res.status(404).send('404 not found');
 });
 
-var port = process.env.port || 3000;
-var url = process.env.APPLICATION_URL || 'http://localhost:' + port;
+var port = process.env.PORT || 3000;
+var url = 'http://localhost:' + port;
 app.listen(port, function () {
     console.log('Simple server listening on port %s! Open %s in your browser to see the result.', port, url);
 });
