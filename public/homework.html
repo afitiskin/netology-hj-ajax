@@ -8,52 +8,14 @@
 </head>
 <body class="shower">
     <section class="intro">
-        <p>Реализуйте виджет авторизации. В вашем распоряжении две абсолютно одинаковых формы с полями <code>email</code> и <code>password</code>, которые нужно отправить на сервер. В качестве ответа сервер пришлет ответ с данными пользователя или ошибку.</p>
-        <p>До отправления формы пользователь должен увидеть только ее, все остальные блоки должны быть скрыты. Во время запроса вместо формы пользователь должен увидеть прелоадер. В случае успешной авторизации форма логина и прелоажер должны быть скрыты, а вместо них должна быть отображена краткая информация о пользователе: аватар, полное имя (<code>name</code> <code>lastname</code>), страна и список увлечений (<code>hobbies</code>), увлечения должны быть перечислены через запятую (например <code>one, two, three</code>). В случае ошибки пользователь должен вновь увидеть форму и сообщение об ошибке (полученное с сервера).</p>
+        <p>Реализуйте виджет авторизации. В вашем форма с полями <code>email</code> и <code>password</code>, которую нужно отправить на сервер. В качестве ответа сервер пришлет данные авторизованного пользователя или ошибку в случае если логин/пароль неправильные.</p>
+        <p>До отправления формы пользователь должен увидеть только её (форму), все остальные блоки (прелоадер, сообщение об ошибке, блок с данными пользователя) должны быть скрыты. Во время запроса вместо формы пользователь должен увидеть прелоадер. В случае успешной авторизации форма логина и прелоажер должны быть скрыты, а вместо них должна быть отображена краткая информация о пользователе: аватар, полное имя (<code>name</code> <code>lastname</code>), страна и список увлечений (<code>hobbies</code>), увлечения должны быть перечислены через запятую (например <code>one, two, three</code>). В случае ошибки пользователь должен вновь увидеть форму и сообщение об ошибке (полученное с сервера).</p>
         <p>Оформление сделайте на ваше усмотрение.</p>
         <p>Аттрибуты <code>data-role</code> нужны для проверки правильности выполнения заданий, пожалуйста не изменяйте их, не удаляйте теги с аттрибутом <code>data-role</code>, используйте те, что есть в задании. Вносить изменения в html разметку (добавлять новые теги для оформления, добавлять классы/стили тегам) можно и даже нужно. HTML-комментарии из кода можно удалить.</p>
     </div>
 
     <section class="ex1">
         <h1>Задание 1.</h1>
-        <p>Используйте для запроса к API url <code>http://netology-hj-ajax.herokuapp.com/homework/login_xml</code> (запрос должен быть отправлен методом POST, <a href="https://learn.javascript.ru/xhr-forms" target="_blank">данные формы должны быть отправлены в теле запроса</a>). Используйте email <code>test@netology.ru</code> и пароль <code>12345</code> для проверки успешной авторизации, при отправлении других значений email/password сервер вернет ошибку. В данном задании сервер присылает ответ в формате XML</p>
-        <form method="post" action="http://netology-hj-ajax.herokuapp.com/homework/login_xml" data-role="xml-request-form">
-            <label>
-                Email:
-                <input type="email" name="email" value="" data-role="xml-request-form-login" />
-            </label>
-            <label>
-                Password:
-                <input type="password" name="password" value="" data-role="xml-request-form-password" />
-            </label>
-            <button type="submit" data-role="xml-request-form-submit">Sign in</button>
-        </form>
-        <div data-role="xml-request-form-preloader">
-            <!-- preloader should be displayed here while request is in progress -->
-        </div>
-        <div data-role="xml-request-form-error">
-            <!-- error should be displayed here in case if API responds with error -->
-        </div>
-
-
-        <div data-role="xml-request-user-profile">
-            <!-- user profile should be displayed here after successfull login -->
-
-            <img src="" alt="" data-role="xml-request-form-user-avatar" />
-            <span data-role="xml-request-form-user-fullname">
-                <!-- full name here (name lastname) -->
-            </span>
-            <span data-role="xml-request-form-user-country">
-                <!-- country here -->
-            </span>
-            <span data-role="xml-request-form-user-hobbies">
-                <!-- hobbies here, comma separated -->
-            </span>
-        </div>
-    </section>
-
-    <section class="ex2">
-        <h1>Задание 2.</h1>
         <p>Используйте для запроса к API url <code>http://netology-hj-ajax.herokuapp.com/homework/login_json</code> (запрос должен быть отправлен методом POST, <a href="https://learn.javascript.ru/xhr-forms" target="_blank">данные формы должны быть отправлены в теле запроса</a>). Используйте email <code>test@netology.ru</code> и пароль <code>12345</code> для проверки успешной авторизации, при отправлении других значений email/password сервер вернет ошибку. В данном задании сервер присылает ответ в формате XML</p>
         <form method="post" action="http://netology-hj-ajax.herokuapp.com/homework/login_json" data-role="json-request-form">
             <label>
@@ -90,8 +52,46 @@
         </div>
     </section>
 
-    <footer>
-        <p><em>Не забывайте о принципе <a href="https://ru.wikipedia.org/wiki/Don%E2%80%99t_repeat_yourself" target="_blank">DRY</a> и, по возможности, переиспользуйте код, который вы уже написали.</em></p>
-    </footer>
+    <section class="ex2">
+        <h1>Задание 2. <small>(не обязательное)</small></h1>
+        <p>Используйте для запроса к API url <code>http://netology-hj-ajax.herokuapp.com/homework/login_xml</code> (запрос должен быть отправлен методом POST, <a href="https://learn.javascript.ru/xhr-forms" target="_blank">данные формы должны быть отправлены в теле запроса</a>). Используйте email <code>test@netology.ru</code> и пароль <code>12345</code> для проверки успешной авторизации, при отправлении других значений email/password сервер вернет ошибку. В данном задании сервер присылает ответ в формате XML</p>
+        <form method="post" action="http://netology-hj-ajax.herokuapp.com/homework/login_xml" data-role="xml-request-form">
+            <label>
+                Email:
+                <input type="email" name="email" value="" data-role="xml-request-form-login" />
+            </label>
+            <label>
+                Password:
+                <input type="password" name="password" value="" data-role="xml-request-form-password" />
+            </label>
+            <button type="submit" data-role="xml-request-form-submit">Sign in</button>
+        </form>
+        <div data-role="xml-request-form-preloader">
+            <!-- preloader should be displayed here while request is in progress -->
+        </div>
+        <div data-role="xml-request-form-error">
+            <!-- error should be displayed here in case if API responds with error -->
+        </div>
+
+
+        <div data-role="xml-request-user-profile">
+            <!-- user profile should be displayed here after successfull login -->
+
+            <img src="" alt="" data-role="xml-request-form-user-avatar" />
+            <span data-role="xml-request-form-user-fullname">
+                <!-- full name here (name lastname) -->
+            </span>
+            <span data-role="xml-request-form-user-country">
+                <!-- country here -->
+            </span>
+            <span data-role="xml-request-form-user-hobbies">
+                <!-- hobbies here, comma separated -->
+            </span>
+        </div>
+
+        <footer>
+            <p><em>Не забывайте о принципе <a href="https://ru.wikipedia.org/wiki/Don%E2%80%99t_repeat_yourself" target="_blank">DRY</a> и, по возможности, переиспользуйте код, который вы уже написали.</em></p>
+        </footer>
+    </section>
 </body>
 </html>

@@ -76,11 +76,13 @@ app.get('/homework/login_xml', function (req, res) {
 });
 
 app.post('/homework/login_xml', function (req, res) {
-    if (req.body && req.body.email === 'test@netology.ru' && req.body.password === '12345') {
-        res.sendFile('./responses/person.xml', options);
-    } else {
-        res.status(401).sendFile('./responses/401.xml', options);;
-    }
+    setTimeout(function () {
+        if (req.body && req.body.email === 'test@netology.ru' && req.body.password === '12345') {
+            res.sendFile('./responses/person.xml', options);
+        } else {
+            res.status(401).sendFile('./responses/401.xml', options);;
+        }
+    }, 3000);
 });
 
 app.get('/homework/login_json', function (req, res) {
@@ -88,11 +90,13 @@ app.get('/homework/login_json', function (req, res) {
 });
 
 app.post('/homework/login_json', function (req, res) {
-    if (req.body && req.body.email === 'test@netology.ru' && req.body.password === '12345') {
-        res.sendFile('./responses/person.json', options);
-    } else {
-        res.status(401).sendFile('./responses/401.json', options);;
-    }
+    setTimeout(function () {
+        if (req.body && req.body.email === 'test@netology.ru' && req.body.password === '12345') {
+            res.sendFile('./responses/person.json', options);
+        } else {
+            res.status(401).sendFile('./responses/401.json', options);;
+        }
+    }, 3000);
 });
 
 app.get('*', function (req, res) {
