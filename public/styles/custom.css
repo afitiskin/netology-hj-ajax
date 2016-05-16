@@ -1,0 +1,116 @@
+.caption h1, .caption p {
+    color: #fff;
+}
+.first-slide {
+    background: url(../pictures/cover.jpg) no-repeat 50%;
+    background-size: cover;
+    text-align: center;
+    font-size: 20px;
+}
+.first-slide h2, .first-slide p, .first-slide a {
+    color: #fff;
+}
+.first-slide h2 {
+    margin: 30px 0 0;
+    font-size: 70px;
+}
+.first-slide p {
+    margin: 10px 0 0;
+    font-style: italic;
+}
+
+.slide .ui-code {
+    display: block;
+}
+.slide .ui-example {
+    display: none;
+}
+
+.slide.with-example .ui-code {
+    display: none;
+}
+.slide.with-example .ui-example {
+    display: block;
+}
+
+.large-code, .large-note {
+    font-size: 50%;
+}
+.big-code, .big-note {
+    font-size: 70%;
+}
+
+.do-not-do-it-pic {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    z-index: -1;
+    transform: scale(.5) translate(50%, 50%)
+}
+.run-button {
+    display: inline-block;
+    height: 26px;
+    position: relative;
+    vertical-align: bottom;
+    padding: 0 15px;
+    margin: 0 25px;
+    background: #4b86c2;
+    border: none;
+    border-radius: 13px;
+    color: #fff;
+    line-height: 26px;
+    cursor: pointer;
+    text-shadow: 1px 1px solid rgba(0, 0, 0, .5);
+    opacity: .8;
+    outline: none;
+}
+.run-button:hover {
+    opacity: 1;
+    box-shadow: 0 0 15px rgba(0, 0, 0, .3);
+}
+
+.form {
+    display: block;
+    position: relative;
+    margin: 50px 0;
+}
+
+.form-field {
+    display: inline-block;
+    height: 40px;
+    position: relative;
+    padding: 0 15px;
+    font: 300 16px/40px 'Open Sans', sans-serif;
+    border: 1px solid #000;
+    border-radius: 5px;
+    outline: none;
+}
+.form-field:focus {
+    box-shadow: 0 0 20px rgba(0, 0, 0, .15);
+}
+.form-button {
+    display: inline-block;
+    height: 40px;
+    position: relative;
+    padding: 0 30px;
+    font: 300 16px/40px 'Open Sans', sans-serif;
+    border: 0;
+    border-radius: 5px;
+    cursor: pointer;
+    outline: none;
+    opacity: .9;
+}
+.form-button:focus, .form-button:hover {
+    opacity: 1;
+    box-shadow: 0 0 20px rgba(0, 0, 0, .15);
+}
+.form-field + .form-field, .form-field + .form-button {
+    margin-left: 15px;
+}
+
+iframe {
+    display: block;
+    width: 100%;
+    height: 300px;
+    border: 1px solid #000;
+}

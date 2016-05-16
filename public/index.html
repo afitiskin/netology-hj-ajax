@@ -6,115 +6,9 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="shower/themes/ribbon/styles/screen-16x10.css">
+    <link rel="stylesheet" href="styles/custom.css">
 </head>
 <body class="shower">
-    <style>
-        .hidden {
-            display: none!important;
-        }
-        .caption h1, .caption p {
-            color: #fff;
-        }
-        .first-slide {
-            background: url(pictures/cover.jpg) no-repeat 50%;
-            background-size: cover;
-            text-align: center;
-            font-size: 20px;
-        }
-        .first-slide h2, .first-slide p, .first-slide a {
-            color: #fff;
-        }
-        .first-slide h2 {
-            margin: 30px 0 0;
-            font-size: 70px;
-        }
-        .first-slide p {
-            margin: 10px 0 0;
-            font-style: italic;
-        }
-
-        .large-code, .large-note {
-            font-size: 50%;
-        }
-        .big-code, .big-note {
-            font-size: 70%;
-        }
-        .do-not-do-it-pic {
-            position: absolute;
-            right: 0;
-            bottom: 0;
-            z-index: -1;
-            transform: scale(.5) translate(50%, 50%)
-        }
-        .run-button {
-            display: inline-block;
-            height: 26px;
-            position: relative;
-            vertical-align: bottom;
-            padding: 0 15px;
-            margin: 0 25px;
-            background: #4b86c2;
-            border: none;
-            border-radius: 13px;
-            color: #fff;
-            line-height: 26px;
-            cursor: pointer;
-            text-shadow: 1px 1px solid rgba(0, 0, 0, .5);
-            opacity: .8;
-            outline: none;
-        }
-        .run-button:hover {
-            opacity: 1;
-            box-shadow: 0 0 15px rgba(0, 0, 0, .3);
-        }
-
-        .form {
-            display: block;
-            position: relative;
-            margin: 50px 0;
-        }
-
-        .form-field {
-            display: inline-block;
-            height: 40px;
-            position: relative;
-            padding: 0 15px;
-            font: 300 16px/40px 'Open Sans', sans-serif;
-            border: 1px solid #000;
-            border-radius: 5px;
-            outline: none;
-        }
-        .form-field:focus {
-            box-shadow: 0 0 20px rgba(0, 0, 0, .15);
-        }
-        .form-button {
-            display: inline-block;
-            height: 40px;
-            position: relative;
-            padding: 0 30px;
-            font: 300 16px/40px 'Open Sans', sans-serif;
-            border: 0;
-            border-radius: 5px;
-            cursor: pointer;
-            outline: none;
-            opacity: .9;
-        }
-        .form-button:focus, .form-button:hover {
-            opacity: 1;
-            box-shadow: 0 0 20px rgba(0, 0, 0, .15);
-        }
-        .form-field + .form-field, .form-field + .form-button {
-            margin-left: 15px;
-        }
-
-        iframe {
-            display: block;
-            width: 100%;
-            height: 300px;
-            border: 1px solid #000;
-        }
-    </style>
-
     <header class="caption">
         <h1>Технология AJAX</h1>
         <p>Университет &laquo;Нетология&raquo;</p>
@@ -157,25 +51,25 @@
         </ol>
     </section>
 
-    <section class="slide">
-        <h2>Отправка данных через form <button class="run-button form-data-send-simple">Пример</button></h2>
-        <pre class="big-code code-example-form">
+    <section class="slide slide-form-simple">
+        <h2>Отправка данных через form <button class="run-button js-toggle-example" data-target=".slide-form-simple">Пример</button></h2>
+        <pre class="big-code ui-code">
             <code>&lt;form method="post"&gt;</code>
             <code>    &lt;input type="text" name="login" placeholder="Login"&gt;</code>
             <code>    &lt;input type="password" name="password" placeholder="Password"&gt;</code>
             <code>    &lt;button type="submit"&gt;Send&lt;button&gt;</code>
             <code>&lt;/form&gt;</code>
         </pre>
-        <form class="form login-simple-form hidden" method="post">
+        <form class="form ui-example" method="post">
             <input class="form-field" type="text" name="login" placeholder="Login">
             <input class="form-field" type="password" name="password" placeholder="Password">
             <button class="form-button" type="submit">Send</button>
         </form>
     </section>
 
-    <section class="slide">
-        <h2>Отправка данных через form в iframe <button class="run-button form-data-send-iframe">Пример</button></h2>
-        <div class="code-example-iframe">
+    <section class="slide slide-form-iframe">
+        <h2>Отправка данных через form в iframe <button class="run-button js-toggle-example" data-target=".slide-form-iframe">Пример</button></h2>
+        <div class="ui-code">
             <pre class="big-code">
                 <code>&lt;form method="post" <mark>target="form-frame"</mark>&gt;</code>
                 <code>    &lt;input type="text" name="login" placeholder="Login"&gt;</code>
@@ -186,16 +80,18 @@
             </pre>
             <p class="note big-note">Кстати, из iframe можно получить данные с помощью JavaScript, если домен (и порт) в <code>src</code> iframe'а совпадает с доменом (и портом) основного окна. Таким образом данные на сервер можно как отправлять, так и получать.</p>
         </div>
-        <form class="form login-iframe-form hidden" target="form-send-iframe" method="post">
-            <input class="form-field" type="text" name="login" placeholder="Login">
-            <input class="form-field" type="password" name="password" placeholder="Password">
-            <button class="form-button" type="submit">Send</button>
-        </form>
-        <iframe name="form-send-iframe" class="simple-iframe hidden"></iframe>
+        <div class="ui-example">
+            <form class="form" target="form-send-iframe" method="post">
+                <input class="form-field" type="text" name="login" placeholder="Login">
+                <input class="form-field" type="password" name="password" placeholder="Password">
+                <button class="form-button" type="submit">Send</button>
+            </form>
+            <iframe name="form-send-iframe"></iframe>
+        </div>
     </section>
 
     <section class="slide">
-        <h2>Отправка данных через тег script <button class="run-button script-data-send">Пример</button></h2>
+        <h2>Отправка данных через тег script <button class="run-button js-tag-request" data-tag-name="script" data-query="hello from script">Пример</button></h2>
         <pre class="big-code">
             <code><span class="comment">// создаем скрипт</span></code>
             <code>var script = document.createElement('script');</code>
@@ -210,7 +106,7 @@
     </section>
 
     <section class="slide">
-        <h2>Отправка данных через тег img <button class="run-button img-data-send">Пример</button></h2>
+        <h2>Отправка данных через тег img <button class="run-button js-tag-request" data-tag-name="img" data-query="hello from img">Пример</button></h2>
         <pre class="big-code">
             <code><span class="comment">// создаем картинку</span></code>
             <code>var img = document.createElement('img');</code>
@@ -325,7 +221,7 @@
     </section>
 
     <section class="slide">
-        <h2>Данные успешно загружены <button class="run-button sync-load-success">Пример</button></h2>
+        <h2>Данные успешно загружены <button class="run-button js-xhr-request" data-type="sync" data-url="/test_request">Пример</button></h2>
         <pre class="large-code">
             <code><span class="comment">// 1. Создаём новый объект XMLHttpRequest</span></code>
             <code>var xhr = new XMLHttpRequest();</code>
@@ -345,7 +241,7 @@
     </section>
 
     <section class="slide">
-        <h2>Произошла ошибка <button class="run-button sync-load-error">Пример</button></h2>
+        <h2>Произошла ошибка <button class="run-button js-xhr-request" data-type="sync" data-url="/404">Пример</button></h2>
         <pre class="large-code">
             <code><span class="comment">// 1. Создаём новый объект XMLHttpRequest</span></code>
             <code>var xhr = new XMLHttpRequest();</code>
@@ -676,7 +572,7 @@
     </section>
 
     <section class="slide">
-        <h2><mark>Синхронный</mark> vs Асинхронный <button class="run-button sync-problem-load">Пример</button></h2>
+        <h2><mark>Синхронный</mark> vs Асинхронный <button class="run-button js-xhr-request" data-type="sync" data-url="/slow_test_request">Пример</button></h2>
         <pre class="large-code">
             <code><span class="comment">// 1. Создаём новый объект XMLHttpRequest</span></code>
             <code>var xhr = new XMLHttpRequest();</code>
@@ -807,7 +703,7 @@
     </section>
 
     <section class="slide">
-        <h2>Синхронный vs <mark>Асинхронный</mark>  <button class="run-button async-problem-load">Пример</button></h2>
+        <h2>Синхронный vs <mark>Асинхронный</mark>  <button class="run-button js-xhr-request" data-type="async" data-url="/slow_test_request">Пример</button></h2>
         <pre class="large-code">
             <code><span class="comment">// 1. Создаём новый объект XMLHttpRequest</span></code>
             <code>var xhr = new XMLHttpRequest();</code>
@@ -907,106 +803,9 @@
             <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest" target="_blank">Спецификация XMLHttpRequest на Mozilla Developer Network</a></li>
         </ul>
     </section>
-    <!--section class="slide">
-        <h2>Пара слов о Node.JS</h2>
-        <figure>
-            <blockquote>
-                <p>Node или Node.js &mdash; программная платформа, основанная на движке V8 (транслирующем JavaScript в машинный код), превращающая JavaScript из узкоспециализированного языка в язык общего назначения.</p>
-            </blockquote>
-            <figcaption>
-                <a target="_blank" href="https://ru.wikipedia.org/wiki/Node.js">Описание из Википедии</a>
-            </figcaption>
-        </figure>
-    </section>
-    <section class="slide">
-        <h2>Установка Node.JS</h2>
-        <ul>
-            <li>
-                Для обычных пользователей: <a target="_blank" href="https://nodejs.org/en/download/">"Скачал-установил"</a>
-            </li>
-            <li>
-                Для продвинутых пользователей: <a target="_blank" href="https://nodejs.org/en/download/package-manager/">Установка через package manager</a>
-            </li>
-        </ul>
-    </section-->
 
     <div class="progress"></div>
     <script src="shower/shower.min.js"></script>
-    <script>
-    function loadSync(url) {
-        var xhr = new XMLHttpRequest();
-        xhr.open('GET', '/api' + url, false);
-        xhr.send();
-        if (xhr.status != 200) {
-            alert(xhr.status + ': ' + xhr.statusText);
-        } else {
-            alert(xhr.responseText);
-        }
-    }
-
-    function loadAsync(url) {
-        var xhr = new XMLHttpRequest();
-        xhr.open('GET', '/api' + url, true);
-        xhr.send();
-        xhr.onload = function () {
-            alert(xhr.responseText);
-        };
-        xhr.onerror = function () {
-            alert(xhr.status + ': ' + xhr.statusText);
-        };
-        return xhr;
-    }
-    document.querySelector('.sync-load-success').addEventListener('click', function (event) {
-        event.preventDefault();
-        loadSync('/test_request');
-    });
-    document.querySelector('.sync-load-error').addEventListener('click', function (event) {
-        event.preventDefault();
-        loadSync('/404');
-    });
-
-    var syncProblemLoadCouter = 0;
-    document.querySelector('.sync-problem-load').addEventListener('click', function (event) {
-        event.preventDefault();
-        loadSync(++syncProblemLoadCouter % 2 ? '/test_request' : '/slow_test_request');
-    });
-
-    var asyncProblemLoadCouter = 0;
-    document.querySelector('.async-problem-load').addEventListener('click', function (event) {
-        event.preventDefault();
-        loadAsync(++asyncProblemLoadCouter % 2 ? '/test_request' : '/slow_test_request');
-    });
-
-    document.querySelector('.form-data-send-simple').addEventListener('click', function (event) {
-        event.preventDefault();
-        document.querySelector('.code-example-form').classList.toggle('hidden');
-        document.querySelector('.login-simple-form').classList.toggle('hidden');
-    });
-
-
-    document.querySelector('.form-data-send-iframe').addEventListener('click', function (event) {
-        event.preventDefault();
-        document.querySelector('.login-iframe-form').classList.toggle('hidden');
-        document.querySelector('.simple-iframe').classList.toggle('hidden');
-        document.querySelector('.code-example-iframe').classList.toggle('hidden');
-    });
-
-
-    document.querySelector('.script-data-send').addEventListener('click', function (event) {
-        event.preventDefault();
-        var script = document.createElement('script');
-        script.src = 'https://www.google.com/?q=' + encodeURIComponent('hello from script');
-        document.body.appendChild(script);
-        document.body.removeChild(script);
-    });
-
-    document.querySelector('.img-data-send').addEventListener('click', function (event) {
-        event.preventDefault();
-        var img = document.createElement('img');
-        img.src = 'https://www.google.com/?q=' + encodeURIComponent('hello from img');
-        document.body.appendChild(img);
-        document.body.removeChild(img);
-    });
-    </script>
+    <script src="scripts/custom.js"></script>
 </body>
 </html>
