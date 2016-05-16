@@ -1,4 +1,6 @@
 var express = require('express');
+var cors = require('cors');
+
 var app = express();
 
 var options = {
@@ -7,6 +9,7 @@ var options = {
 };
 
 app.use(express.static('public'));
+app.use(cors());
 
 app.post('/', function (req, res) {
     res.sendFile('public/index.html', options);
