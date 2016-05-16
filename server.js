@@ -1,5 +1,6 @@
 var express = require('express');
 var cors = require('cors');
+var bodyParser = require('body-parser');
 
 var app = express();
 
@@ -10,6 +11,9 @@ var options = {
 
 app.use(express.static('public'));
 app.use(cors());
+app.use(bodyParser.urlencoded({
+    extended: false,
+}));
 
 app.post('/', function (req, res) {
     res.sendFile('public/index.html', options);
@@ -26,20 +30,20 @@ app.get('/api/slow_test_request', function (req, res) {
 });
 
 app.get('/api/get_text', function (req, res) {
-    res.sendFile('./responses/test.txt', options);
+    res.sendFile('./responses/response.txt', options);
 });
 
 app.get('/api/get_html', function (req, res) {
-    res.sendFile('./responses/test.html', options);
+    res.sendFile('./responses/response.html', options);
 });
 
 app.get('/api/get_xml', function (req, res) {
-    res.sendFile('./responses/test.xml', options);
+    res.sendFile('./responses/person.xml', options);
 });
 
 app.get('/api/get_json', function (req, res) {
     res.set('Content-Type', 'application/json; charset=utf-8');
-    res.sendFile('./responses/test.json', options);
+    res.sendFile('./responses/person.json', options);
 });
 
 var person = {
@@ -65,6 +69,30 @@ app.get('/api/get_jsonp', function (req, res) {
 
 app.get('/api/get_other_jsonp', function (req, res) {
     res.jsonp(person);
+});
+
+app.get('/homework/login_xml', function (req, res) {
+    res.status(400).sendFile('./responses/400.xml', options);;
+});
+
+app.post('/homework/login_xml', function (req, res) {
+    if (req.body && req.body.email === 'test@netology.ru' && req.body.password === '12345') {
+        res.sendFile('./responses/person.xml', options);
+    } else {
+        res.status(401).sendFile('./responses/401.xml', options);;
+    }
+});
+
+app.get('/homework/login_json', function (req, res) {
+    res.status(400).sendFile('./responses/400.json', options);;
+});
+
+app.post('/homework/login_json', function (req, res) {
+    if (req.body && req.body.email === 'test@netology.ru' && req.body.password === '12345') {
+        res.sendFile('./responses/person.json', options);
+    } else {
+        res.status(401).sendFile('./responses/401.json', options);;
+    }
 });
 
 app.get('*', function (req, res) {
