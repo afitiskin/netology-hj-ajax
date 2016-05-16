@@ -78,7 +78,6 @@ app.get('/homework/login_xml', function (req, res) {
 
 app.post('/homework/login_xml', function (req, res) {
     setTimeout(function () {
-        console.log(req.body);
         if (req.body && req.body.email === 'test@netology.ru' && req.body.password === '12345') {
             res.sendFile('./responses/person.xml', options);
         } else {
