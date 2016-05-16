@@ -8,6 +8,8 @@
 </head>
 <body>
     <section class="intro">
+        <h1>Домашнее задание к лекции 4.5 «Технология AJAX»</h1>
+
         <p>Реализуйте виджет авторизации. В вашем распоряжении форма с полями <code>email</code> и <code>password</code>, которую нужно отправить на сервер. В качестве ответа сервер пришлет данные авторизованного пользователя или ошибку в случае если логин/пароль неправильные.</p>
         <p>Логика работы формы:</p>
         <ol>
@@ -28,22 +30,17 @@
             </li>
         </ol>
         <p>Оформление сделайте на ваше усмотрение.</p>
-        <p>Аттрибуты <code>data-role</code> нужны для проверки правильности выполнения заданий, пожалуйста не изменяйте их, не удаляйте теги с аттрибутом <code>data-role</code>, используйте те, что есть в задании. Вносить изменения в html разметку (добавлять новые теги для оформления, добавлять классы/стили тегам) можно и даже нужно. HTML-комментарии и описание заданий из кода можно удалить.</p>
+        <p>Аттрибуты <code>data-role</code> нужны для проверки правильности выполнения заданий, пожалуйста не изменяйте их, не удаляйте теги с аттрибутом <code>data-role</code>, используйте те, что есть в задании. Вносить изменения в html разметку (добавлять новые теги для оформления, добавлять классы/стили тегам) можно и даже нужно. HTML-комментарии из кода можно удалить.</p>
 
-        <p>Решение и сдача задания на проверку:</p>
-        <ol>
-            <li>Используйте данный HTML-документ в качестве отправной точки для вашего решения.</li>
-            <li>Внесите необходимые изменения в HTML-код. Подключите скрипты и стили отельными файлами</li>
-            <li>Готовое решение выложите на university.netology.ru</li>
-            <li>Исходный код решения выложите на <a href="https://bitbucket.org/">BitBucket</a> или <a href="https://github.com/">GitHub</a></li>
-            <li>Пришлите 2 ссылки: ссылку на рабочее решение и на репозиторий c исходным кодомo</li>
-            <li>Если возникнут вопросы, то обязательно прикрепляйте к вопросам примеры своего кода (<a href="https://bitbucket.org/">BitBucket</a> / <a href="https://github.com/">GitHub</a> или <a href="http://codepen.io">CodePen</a> / <a href="https://jsfiddle.net">JSFiddle</a>).</li>
-        </ol>
-    </div>
+        <footer>
+            <p><em>Не забывайте о принципе <a href="https://ru.wikipedia.org/wiki/Don%E2%80%99t_repeat_yourself" target="_blank">DRY</a> и, по возможности, переиспользуйте код, который вы уже написали.</em></p>
+        </footer>
 
-    <section class="ex1">
-        <h1>Задание 1.</h1>
+        <h2>Задание 1.</h2>
         <ul>
+            <li>
+                Используйте файл <a href="./homework-exercise1.html" target="_blank">homework-exercise1.html</a> в качестве основы
+            </li>
             <li>
                 Используйте для запроса к API url <code>http://netology-hj-ajax.herokuapp.com/homework/login_json</code>
             </li>
@@ -66,45 +63,12 @@
               В данном задании сервер присылает ответ в формате JSON
             </li>
         </ul>
-        <form method="post" action="http://netology-hj-ajax.herokuapp.com/homework/login_json" enctype="application/x-www-form-urlencoded" data-role="json-request-form">
-            <label>
-                Email:
-                <input type="email" name="email" value="" data-role="json-request-form-login" />
-            </label>
-            <label>
-                Password:
-                <input type="password" name="password" value="" data-role="json-request-form-password" />
-            </label>
-            <button type="submit" data-role="json-request-form-submit">Sign in</button>
-            <span data-role="json-request-preloader">
-                <!-- preloader should be displayed here while request is in progress -->
-            </span>
-            <div data-role="json-request-error">
-                <!-- error should be displayed here in case if API responds with error -->
-            </div>
-        </form>
 
-        <div data-role="json-request-user-profile">
-            <!-- user profile should be displayed here after successfull login -->
-
-            <img src="" alt="" data-role="json-request-user-profile-avatar" />
-            <span data-role="json-request-user-profile-fullname">
-                <!-- full name here (name lastname) -->
-            </span>
-            <span data-role="json-request-user-profile-country">
-                <!-- country here -->
-            </span>
-            <span data-role="json-request-user-profile-hobbies">
-                <!-- hobbies here, comma separated -->
-            </span>
-
-            <button data-role="json-request-user-profile-logout">Sign out</button>
-        </div>
-    </section>
-
-    <section class="ex2">
-        <h1>Задание 2. <small>(не обязательное)</small></h1>
+        <h2>Задание 2. <small>(не обязательное)</small></h2>
         <ul>
+            <li>
+                Используйте файл <a href="./homework-exercise2.html" target="_blank">homework-exercise2.html</a> в качестве основы
+            </li>
             <li>
                 Используйте для запроса к API url <code>http://netology-hj-ajax.herokuapp.com/homework/login_xml</code>
             </li>
@@ -127,44 +91,18 @@
               В данном задании сервер присылает ответ в формате XML
             </li>
         </ul>
-        <form method="post" action="http://netology-hj-ajax.herokuapp.com/homework/login_xml" enctype="application/json" data-role="xml-request-form">
-            <label>
-                Email:
-                <input type="email" name="email" value="" data-role="xml-request-form-login" />
-            </label>
-            <label>
-                Password:
-                <input type="password" name="password" value="" data-role="xml-request-form-password" />
-            </label>
-            <button type="submit" data-role="xml-request-form-submit">Sign in</button>
-        </form>
-        <div data-role="xml-request-preloader">
-            <!-- preloader should be displayed here while request is in progress -->
-        </div>
-        <div data-role="xml-request-error">
-            <!-- error should be displayed here in case if API responds with error -->
-        </div>
-
-        <div data-role="xml-request-user-profile">
-            <!-- user profile should be displayed here after successfull login -->
-
-            <img src="" alt="" data-role="xml-request-user-profile-avatar" />
-            <span data-role="xml-request-user-profile-fullname">
-                <!-- full name here (name lastname) -->
-            </span>
-            <span data-role="xml-request-user-profile-country">
-                <!-- country here -->
-            </span>
-            <span data-role="xml-request-user-profile-hobbies">
-                <!-- hobbies here, comma separated -->
-            </span>
-
-            <button data-role="xml-request-user-profile-logout">Sign out</button>
-        </div>
     </section>
 
-    <footer>
-        <p><em>Не забывайте о принципе <a href="https://ru.wikipedia.org/wiki/Don%E2%80%99t_repeat_yourself" target="_blank">DRY</a> и, по возможности, переиспользуйте код, который вы уже написали.</em></p>
-    </footer>
+    <aside>
+        <h3>Решение и сдача заданий на проверку:</h3>
+        <ol>
+            <li>Используйте подготовленные HTML-документы (<a href="./homework-exercise1.html" target="_blank">homework-exercise1.html</a> и <a href="./homework-exercise2.html" target="_blank">homework-exercise2.html</a>) в качестве отправной точки для вашего решения.</li>
+            <li>Внесите необходимые изменения в HTML-код. Подключите скрипты и стили отельными файлами</li>
+            <li>Готовое решение выложите на university.netology.ru</li>
+            <li>Исходный код решения выложите на <a href="https://bitbucket.org/">BitBucket</a> или <a href="https://github.com/">GitHub</a></li>
+            <li>Пришлите 2 ссылки: ссылку на рабочее решение и на репозиторий c исходным кодом</li>
+            <li>Если возникнут вопросы, то обязательно прикрепляйте к вопросам примеры своего кода (<a href="https://bitbucket.org/">BitBucket</a> / <a href="https://github.com/">GitHub</a> или <a href="http://codepen.io">CodePen</a> / <a href="https://jsfiddle.net">JSFiddle</a>).</li>
+        </ol>
+    </aside>
 </body>
 </html>
