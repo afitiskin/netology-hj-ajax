@@ -21,7 +21,7 @@ function loadAsync(url) {
         alert(xhr.responseText);
     });
     xhr.addEventListener('error', function () {
-        alert(xhr.status + ': ' + xhr.statusText);
+        alert('Something wrong!');
     });
     xhr.send();
     return xhr;
